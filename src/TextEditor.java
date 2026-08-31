@@ -234,6 +234,16 @@ public class TextEditor {
         jTextPane1.setCaretPosition(pt);
     }
 
+    public void setFontSize(int newSize) {
+        int size = Math.max(8, Math.min(36, newSize));
+        java.awt.Font f = jTextPane1.getFont();
+        jTextPane1.setFont(f.deriveFont((float) size));
+        asm.editorFontSize = size;
+        asm.jMenuItemZoomIn.setEnabled(size < 36);
+        asm.jMenuItemZoomOut.setEnabled(size > 8);
+        colorEditor();
+    }
+
     public void highligher(int row) {
 
         int[] line = new int[1000];

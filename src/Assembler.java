@@ -28,7 +28,8 @@ public class Assembler extends javax.swing.JFrame implements Runnable{
     boolean closeStateCall=false;
     float[] speed=new float[4];
     int timingDiagramX = 0;
-    
+    int editorFontSize = 11;
+
     String recover="";
     String[] comments=new String[1000];
     String[] macro=new String[1000];
@@ -148,6 +149,7 @@ public class Assembler extends javax.swing.JFrame implements Runnable{
        speed[0]=0;speed[1]=0;speed[2]=0;speed[3]=1;
         for (int i = 0; i < 3; i++) jTableNoConverter.setValueAt(0, 0, i);
         loadSettings();
+        textEditor.setFontSize(editorFontSize);
         if(path.length()>0)path=path.substring(0,path.length());
         set();
     }
@@ -269,6 +271,11 @@ public class Assembler extends javax.swing.JFrame implements Runnable{
         jMenuItem2 = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JSeparator();
         jMenuItem6 = new javax.swing.JMenuItem();
+        jSeparator12 = new javax.swing.JSeparator();
+        jMenuZoom = new javax.swing.JMenu();
+        jMenuItemZoomIn = new javax.swing.JMenuItem();
+        jMenuItemZoomOut = new javax.swing.JMenuItem();
+        jMenuItemZoomReset = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItemRunAllAtATime = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -1638,6 +1645,44 @@ public class Assembler extends javax.swing.JFrame implements Runnable{
     });
     jMenuSettings.add(jMenuItem6);
 
+    jSeparator12.setName("jSeparator12"); // NOI18N
+    jMenuSettings.add(jSeparator12);
+
+    jMenuZoom.setText("Editor Font Size");
+    jMenuZoom.setName("jMenuZoom"); // NOI18N
+
+    jMenuItemZoomIn.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_EQUALS, java.awt.event.InputEvent.CTRL_MASK));
+    jMenuItemZoomIn.setText("Increase");
+    jMenuItemZoomIn.setName("jMenuItemZoomIn"); // NOI18N
+    jMenuItemZoomIn.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItemZoomInActionPerformed(evt);
+        }
+    });
+    jMenuZoom.add(jMenuItemZoomIn);
+
+    jMenuItemZoomOut.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_MINUS, java.awt.event.InputEvent.CTRL_MASK));
+    jMenuItemZoomOut.setText("Decrease");
+    jMenuItemZoomOut.setName("jMenuItemZoomOut"); // NOI18N
+    jMenuItemZoomOut.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItemZoomOutActionPerformed(evt);
+        }
+    });
+    jMenuZoom.add(jMenuItemZoomOut);
+
+    jMenuItemZoomReset.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_0, java.awt.event.InputEvent.CTRL_MASK));
+    jMenuItemZoomReset.setText("Reset");
+    jMenuItemZoomReset.setName("jMenuItemZoomReset"); // NOI18N
+    jMenuItemZoomReset.addActionListener(new java.awt.event.ActionListener() {
+        public void actionPerformed(java.awt.event.ActionEvent evt) {
+            jMenuItemZoomResetActionPerformed(evt);
+        }
+    });
+    jMenuZoom.add(jMenuItemZoomReset);
+
+    jMenuSettings.add(jMenuZoom);
+
     jMenuBar1.add(jMenuSettings);
 
     jMenu2.setText("Simulation");
@@ -2754,6 +2799,18 @@ public class Assembler extends javax.swing.JFrame implements Runnable{
         s.s="Set";
    }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+   private void jMenuItemZoomInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemZoomInActionPerformed
+        textEditor.setFontSize(editorFontSize + 1);
+   }//GEN-LAST:event_jMenuItemZoomInActionPerformed
+
+   private void jMenuItemZoomOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemZoomOutActionPerformed
+        textEditor.setFontSize(editorFontSize - 1);
+   }//GEN-LAST:event_jMenuItemZoomOutActionPerformed
+
+   private void jMenuItemZoomResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemZoomResetActionPerformed
+        textEditor.setFontSize(11);
+   }//GEN-LAST:event_jMenuItemZoomResetActionPerformed
+
    private void jRadioButtonMenuItemNormalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItemNormalActionPerformed
 
        jRadioButtonMenuItemNormal.setSelected(true);
@@ -3527,6 +3584,7 @@ public int find=0;
                  out.println(jTextFieldBeginFrom.getText());
                  out.println(path);
                  out.println(stopAtIndex);
+                 out.println(editorFontSize);
                  out.close();
 
         } catch (Exception e) {
@@ -3545,6 +3603,7 @@ public int find=0;
             if((line=in.readLine())!=null)jTextFieldBeginFrom.setText(line);
             if((line=in.readLine())!=null)path=line;
             if((line=in.readLine())!=null)stopAtIndex=Integer.parseInt(line);
+            if((line=in.readLine())!=null)editorFontSize=Integer.parseInt(line);
             in.close();
         }
         catch(Exception e){}
@@ -3614,6 +3673,7 @@ public int find=0;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JMenu jMenuHelp;
+    private javax.swing.JMenu jMenuZoom;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
     private javax.swing.JMenuItem jMenuItem11;
@@ -3652,6 +3712,9 @@ public int find=0;
     private javax.swing.JMenuItem jMenuItemSave_Assembly_Language_code;
     private javax.swing.JMenuItem jMenuItemSave_Hexcode;
     private javax.swing.JMenuItem jMenuItemStop;
+    public javax.swing.JMenuItem jMenuItemZoomIn;
+    public javax.swing.JMenuItem jMenuItemZoomOut;
+    public javax.swing.JMenuItem jMenuItemZoomReset;
     private javax.swing.JMenu jMenuSettings;
     private javax.swing.JPanel jPanel8255;
     private javax.swing.JProgressBar jProgressBar1;
@@ -3679,6 +3742,7 @@ public int find=0;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator10;
     private javax.swing.JSeparator jSeparator11;
+    private javax.swing.JSeparator jSeparator12;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JSeparator jSeparator5;
